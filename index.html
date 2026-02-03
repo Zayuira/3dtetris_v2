@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Tetris</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    #menu,
+    #gameover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 10px;
+      background: #444;
+      color: white;
+      border: 2px solid #666;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      display: none;
+      pointer-events: none;
+      /* Let clicks pass through to canvas if needed, but buttons need pointer-events auto */
+    }
+
+    #hud>* {
+      pointer-events: auto;
+    }
+
+    .controls-guide {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    .controls-guide h3 {
+      margin-top: 0;
+    }
+
+    .controls-guide p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .settings {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .settings div {
+      margin: 5px 0;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Controls Guide Overlay (Always visible in menu, or maybe just always?) -->
+  <!-- Let's put it in menu for now, or separate -->
+  <div class="controls-guide">
+    <h3>Controls</h3>
+    <p><b>W/S</b>: Rotate Pitch (X)</p>
+    <p><b>A/D</b>: Rotate Yaw (Y)</p>
+    <p><b>Q/E</b>: Rotate Roll (Z)</p>
+    <p><b>Arrows</b>: Move X/Z</p>
+    <p><b>Space</b>: Hard Drop</p>
+    <p><b>C</b>: Hold Piece</p>
+    <p><b>P / Esc</b>: Pause/Resume</p>
+  </div>
+
+  <div id="menu">
+    <h1>3D TETRIS SPACE</h1>
+
+    <div class="settings">
+      <label>Board Size:</label>
+      <div>
+        <label><input type="radio" name="boardSize" value="10,20,10" checked> 10 x 20 x 10 (Standard)</label>
+      </div>
+      <div>
+        <label><input type="radio" name="boardSize" value="6,12,6"> 6 x 12 x 6 (Small)</label>
+      </div>
+      <div>
+        <label><input type="radio" name="boardSize" value="8,16,8"> 8 x 16 x 8 (Medium)</label>
+      </div>
+    </div>
+
+    <div class="scores-menu">
+      <p>High Score: <span id="highScoreMenu">0</span></p>
+    </div>
+
+    <button id="startBtn">START GAME</button>
+    <button id="soundBtn">🔊 Sound: ON</button>
+  </div>
+
+  <div id="hud">
+    <div id="score-container">
+      Score: <span id="score">0</span>
+      <br>
+      High: <span id="highScoreHud">0</span>
+    </div>
+    <br>
+    <button id="pauseBtn">⏸️ Pause</button>
+  </div>
+
+  <div id="gameover" style="display: none">
+    <h1>GAME OVER</h1>
+    <p>Final Score: <span id="finalScore">0</span></p>
+    <button id="restartBtn">TRY AGAIN</button>
+    <button id="menuBtn">MAIN MENU</button>
+  </div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+
+</html>
